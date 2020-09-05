@@ -12,7 +12,8 @@ object Spark03_Partition_default {
     //3.通过集合创建rdd
     val rdd: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4))
     //4.查看分区效果
-    println(rdd.partitions.size)
+//    println(rdd.partitions.size)
+    rdd.saveAsTextFile("H:\\spark-0105\\output")
 
     //关闭连接
     sc.stop()

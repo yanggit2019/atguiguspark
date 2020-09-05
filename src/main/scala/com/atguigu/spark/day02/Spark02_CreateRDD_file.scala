@@ -11,7 +11,10 @@ object Spark02_CreateRDD_file {
     val sc = new SparkContext(conf)
 
     //3.从本地文件读取数据，创建rdd
-    val rdd: RDD[String] = sc.textFile("H:\\spark-0105\\input")
+//    val rdd: RDD[String] = sc.textFile("H:\\spark-0105\\input")
+//    rdd.collect().foreach(println)
+    //4.从hdfs上读取数据，创建rdd
+    val rdd: RDD[String] = sc.textFile("hdfs://192.168.88.199:9000:/user/liuyiyang21/spark/output")
     rdd.collect().foreach(println)
     //关闭连接
     sc.stop()

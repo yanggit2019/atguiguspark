@@ -11,9 +11,9 @@ object Spark01_Transformation_mapPartitions {
     val sc = new SparkContext(conf)
     val rdd: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4), 2)
     //以分区为单位，对Rdd中的元素进行映射
-    val newRdd: RDD[Int] = rdd.mapPartitions(datas => {
-      datas.map(_ * 2)
-    })
+    val newRdd: RDD[Int] = rdd.mapPartitions(
+      _.map(_ * 2)
+    )
     newRdd.collect().foreach(println)
     //关闭连接
     sc.stop()

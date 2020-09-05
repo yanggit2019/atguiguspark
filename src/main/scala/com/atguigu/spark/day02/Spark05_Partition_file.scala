@@ -15,7 +15,10 @@ object Spark05_Partition_file {
     //输入数据1 2 3 4 采用默认分区方式，最终分区数2
 //    val rdd: RDD[String] = sc.textFile("H:\\spark-0105\\input\\2.txt")
     //输入数据1 2 3 4 指定分区数，minPartitions设置为3，最终分区数为4
+//    val rdd: RDD[String] = sc.textFile("H:\\spark-0105\\input\\2.txt",3)
+//    输入数据123456,minPartition设置为3，最终分区数3
     val rdd: RDD[String] = sc.textFile("H:\\spark-0105\\input\\2.txt",3)
+    //输入数据123 4567 ,minPartition设置为3,最终分区数
     rdd.saveAsTextFile("H:\\spark-0105\\output")
 //    rdd.collect().foreach(println)
     //关闭连接

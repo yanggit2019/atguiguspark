@@ -16,7 +16,9 @@ object Spark04_Partition_mem {
     // 设置分区数为4，集合4个数据，实际输出4个分区---分区中数据分布
 //    val rdd: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4),4)
     // 设置分区数为3，集合4个数据，实际输出3个分区---分区中数据分布
-    val rdd: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4),3)
+//    val rdd: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4),3)
+    // 设置分区数为3，集合5个数据，实际输出3个分区---分区中数据分布
+    val rdd: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4,5),3)
     rdd.saveAsTextFile("H:\\spark-0105\\output")
     
 

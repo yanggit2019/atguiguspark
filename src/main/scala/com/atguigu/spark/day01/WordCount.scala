@@ -5,7 +5,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 object WordCount {
   def main(args: Array[String]): Unit = {
-    //2.创建SparkConf配置文件
+    /*2.创建SparkConf配置文件
     val conf = new SparkConf().setMaster("local[*]").setAppName("WordCount")
     //1.创建SparkContext对象
     val sc = new SparkContext(conf)
@@ -20,7 +20,12 @@ object WordCount {
     //7.将执行的结果进行收集
     val res: Array[(String, Int)] = reduceRdd.collect()
     
-//    res.foreach(println)
+//    res.foreach(println)*/
+    //一行代码搞定
+    //创建配置文件
+    val conf: SparkConf = new SparkConf().setAppName("WordCount").setMaster("local[*]")
+    val sc = new SparkContext(conf)
+    sc.textFile("H:\\spark-0105\\input").flatMap(_.split(" ")).map((_,1)).reduceByKey(_+_).collect().foreach(println)
     //8.释放资源
     sc.stop()
   }

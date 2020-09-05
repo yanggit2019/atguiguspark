@@ -24,8 +24,9 @@ object WordCount {
     //一行代码搞定
     //创建配置文件
     val conf: SparkConf = new SparkConf().setAppName("WordCount").setMaster("local[*]")
+    //创建SparkContext
     val sc = new SparkContext(conf)
-    sc.textFile("H:\\spark-0105\\input").flatMap(_.split(" ")).map((_,1)).reduceByKey(_+_).collect().foreach(println)
+    sc.textFile(args(0)).flatMap(_.split(" ")).map((_,1)).reduceByKey(_+_).saveAsTextFile(args(1))
     //8.释放资源
     sc.stop()
   }

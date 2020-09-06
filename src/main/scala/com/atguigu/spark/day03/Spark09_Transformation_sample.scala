@@ -16,7 +16,7 @@ object Spark09_Transformation_sample {
 //    newRdd.collect().foreach(println)
     val rdd: RDD[Int] = sc.makeRDD(1 to 10)
     //从rdd中随机抽取一些数
-    val newRdd: RDD[Int] = rdd.sample(true, 1)
+    val newRdd: RDD[Int] = rdd.sample(false, 0.6)
     newRdd.collect().foreach(println)
     
 

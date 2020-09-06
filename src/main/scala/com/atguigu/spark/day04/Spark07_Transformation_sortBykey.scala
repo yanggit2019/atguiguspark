@@ -14,7 +14,7 @@ object Spark07_Transformation_sortBykey {
     //创建rdd
     val rdd: RDD[(Int, String)] = sc.makeRDD(Array((3, "aa"), (6, "cc"), (2, "bb"), (1, "dd")))
     //按照key对rdd中元素进行排序
-    val newRdd: RDD[(Int, String)] = rdd.sortByKey()
+    val newRdd: RDD[(Int, String)] = rdd.sortByKey(false)
 
     newRdd.collect().foreach(println)
     

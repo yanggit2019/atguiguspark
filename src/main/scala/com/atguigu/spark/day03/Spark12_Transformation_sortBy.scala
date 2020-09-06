@@ -12,7 +12,8 @@ object Spark12_Transformation_sortBy {
     val sc = new SparkContext(conf)
     val rdd: RDD[Int] = sc.makeRDD(List(1,4,3,2))
     //升序排序
-    val SortedRdd: RDD[Int] = rdd.sortBy(num => num)
+//    val SortedRdd: RDD[Int] = rdd.sortBy(num => num)
+    val SortedRdd: RDD[Int] = rdd.sortBy(num => -num)
     SortedRdd.collect().foreach(println)
     
    

@@ -26,25 +26,27 @@ object Spark06_Transformation_combineBykey {
     //如果某个组数据量比较大,会造成单点压力
     //方案2 使用reduceByKey (name,score)===>(name,(score,1))
     //对Rdd中的数据进行结构的转换
-    val mapRdd: RDD[(String, (Int, Int))] = rdd.map {
-      case (name, score) => {
-        (name, (score, 1))
+//    
+    //方案三 通过combineByKey来实现
+    // createCombiner: V => C,从RDD中当前key取出第一个Value做一个初始化
+    //      mergeValue: (C, V) => C,分区内计算规则,主要在分区内进行,将当前分区的value值,合并到初始化得到的c上面
+    //      mergeCombiners: (C, C) => C 分区间计算规则
+    val combineRdd: RDD[(String, (Int, Int))] = rdd.combineByKey(
+      (_, 1),
+      (tup1: (Int, Int), v) => {
+        (tup1._1 + v, tup1._2 + 1)
+      },
+      (tup2: (Int, Int), tup3: (Int, Int)) => {
+        (tup2._1 + tup3._1, tup2._2 + tup3._2)
       }
-    }
-    //通过reduceByKey对数据进行聚合(jingjing,(196,2))
-    val reduceRdd: RDD[(String, (Int, Int))] = mapRdd.reduceByKey {
-      (t1, t2) => {
-        (t1._1 + t2._1, t1._2 + t2._2)
-      }
-    }
-    //求出平均值
-    val redRdd: RDD[(String, Int)] = reduceRdd.map {
+    )
+    val resRdd: RDD[(String, Int)] = combineRdd.map {
       case (name, (score, count)) => {
         (name, score / count)
       }
-
     }
-    redRdd.collect().foreach(println)
+    resRdd.collect().foreach(println)
+    
     //关闭连接
     sc.stop()
   }

@@ -23,7 +23,7 @@ val stuList = List((new Student("jingjing", 18), 1),
   (new Student("jingjing", 20), 1)
 )
     val rdd: RDD[(Student, Int)] = sc.makeRDD(stuList)
-    rdd.sortByKey().collect().foreach(println)
+    rdd.sortByKey(false).collect().foreach(println)
     
     
     //关闭连接

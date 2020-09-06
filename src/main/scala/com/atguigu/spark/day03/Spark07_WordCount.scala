@@ -13,18 +13,28 @@ object Spark07_WordCount {
     val rdd: RDD[String] = sc.makeRDD(List("Hello Scala", "Hello Spark", "Hello World"))
     //简单版本，方式一
     //对rdd元素扁平映射
+//    val flatMap: RDD[String] = rdd.flatMap(_.split(" "))
+//    //将映射后的数据进行结构转换，为每个单词计数
+//    val mapRdd: RDD[(String, Int)] = flatMap.map((_, 1))
+//    //按照key对Rdd中元素进行分组
+//    val groupByRdd: RDD[(String, Iterable[(String, Int)])] = mapRdd.groupBy(_._1)
+//    //对分组后的元素再次进行映射
+//    val resRdd: RDD[(String, Int)] = groupByRdd.map {
+//      case (word, datas) => {
+//        (word, datas.size)
+//      }
+//    }
+      //第二种实现
     val flatMap: RDD[String] = rdd.flatMap(_.split(" "))
-    //将映射后的数据进行结构转换，为每个单词计数
-    val mapRdd: RDD[(String, Int)] = flatMap.map((_, 1))
-    //按照key对Rdd中元素进行分组
-    val groupByRdd: RDD[(String, Iterable[(String, Int)])] = mapRdd.groupBy(_._1)
-    //对分组后的元素再次进行映射
+    //将rdd中的单词进行分组
+    val groupByRdd: RDD[(String, Iterable[String])] = flatMap.groupBy(word => word)
+    //对分组后的rdd进行映射
     val resRdd: RDD[(String, Int)] = groupByRdd.map {
       case (word, datas) => {
         (word, datas.size)
       }
     }
-      
+    
     resRdd.foreach(println)
     
     //关闭连接

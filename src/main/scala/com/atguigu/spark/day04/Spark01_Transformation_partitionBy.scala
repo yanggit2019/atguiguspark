@@ -1,7 +1,7 @@
 package com.atguigu.spark.day04
 
 import org.apache.spark.rdd.RDD
-import org.apache.spark.{HashPartitioner, SparkConf, SparkContext}
+import org.apache.spark.{HashPartitioner, Partitioner, SparkConf, SparkContext}
 //对kV型的rdd按照key进行重新分区
 object Spark01_Transformation_partitionBy {
   def main(args: Array[String]): Unit = {
@@ -19,7 +19,7 @@ object Spark01_Transformation_partitionBy {
       }
     }.collect()
     println("-------------------------------")
-    val newRdd: RDD[(Int, String)] = rdd.partitionBy(new HashPartitioner(2))
+    val newRdd: RDD[(Int, String)] = rdd.partitionBy(new MyPartitioner(2))
     newRdd.mapPartitionsWithIndex{
       (index,datas)=>{
         println(index + "-------" +datas.mkString(","))
@@ -29,5 +29,14 @@ object Spark01_Transformation_partitionBy {
     
     //关闭连接
     sc.stop()
+  }
+}
+//自定义分区器
+class MyPartitioner(partitions:Int) extends Partitioner{
+  //获取分区个数
+  override def numPartitions: Int = partitions
+  //指定分区规则,返回值表示分区编号,从0开始
+  override def getPartition(key: Any): Int = {
+    1
   }
 }

@@ -18,11 +18,15 @@ object Spark04_Transformation_aggregateBykey {
     //reduceByKey实现WordCount
 //    val resRdd: RDD[(String, Int)] = rdd.reduceByKey(_ + _)
     //使用aggregateByKey实现WordCount
+//val redRdd: RDD[(String, Int)] = rdd.aggregateByKey(0)(
+//  (x: Int, y: Int) => x + y,
+//  (a: Int, b: Int) => a + b
+//)
+    //分区内取最大值,分区间求和
 val redRdd: RDD[(String, Int)] = rdd.aggregateByKey(0)(
-  (x: Int, y: Int) => x + y,
-  (a: Int, b: Int) => a + b
+  (x, y) => math.max(x, y),
+  (a, b) => a + b
 )
-
     redRdd.collect().foreach(println)
     
     //关闭连接

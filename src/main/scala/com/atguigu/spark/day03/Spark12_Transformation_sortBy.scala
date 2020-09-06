@@ -16,7 +16,9 @@ object Spark12_Transformation_sortBy {
     //升序排序
 //    val SortedRdd: RDD[Int] = rdd.sortBy(num => num)
 //    val SortedRdd: RDD[Int] = rdd.sortBy(num => -num)
-    val SortedRdd: RDD[String] = strRDD.sortBy(num => num, true)
+    //按照字典排序
+//    val SortedRdd: RDD[String] = strRDD.sortBy(num => num, true)
+val SortedRdd: RDD[String] = strRDD.sortBy(_.toInt)
     SortedRdd.collect().foreach(println)
     
    

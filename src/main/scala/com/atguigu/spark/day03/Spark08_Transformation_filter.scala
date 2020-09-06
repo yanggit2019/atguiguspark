@@ -9,9 +9,12 @@ object Spark08_Transformation_filter {
     val conf: SparkConf = new SparkConf().setMaster("local[*]").setAppName("Spark08_Transformation_filter")
     //1.创建SparkContext对象
     val sc = new SparkContext(conf)
-    val rdd: RDD[String] = sc.makeRDD(List("wangqiao","xiaojing", "hanqi", "chengjiang", "xiaohao"))
-    val newRdd: RDD[String] = rdd.filter(_.contains("xiao"))
-    
+//    val rdd: RDD[String] = sc.makeRDD(List("wangqiao","xiaojing", "hanqi", "chengjiang", "xiaohao"))
+//    val newRdd: RDD[String] = rdd.filter(_.contains("xiao"))
+//    
+//    newRdd.collect().foreach(println)
+    val rdd: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4, 5, 6, 7, 8, 9), 2)
+    val newRdd: RDD[Int] = rdd.filter(_ % 2 != 0)
     newRdd.collect().foreach(println)
     
 

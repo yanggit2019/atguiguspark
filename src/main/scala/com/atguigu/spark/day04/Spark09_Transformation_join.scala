@@ -16,8 +16,8 @@ object Spark09_Transformation_join {
 //    val newRdd: RDD[(Int, (Int, String))] = rdd2.join(rdd1)
 //    val newRdd: RDD[(Int, (String, Int))] = rdd1.join(rdd2)
 //val newRdd: RDD[(Int, (String, Option[Int]))] = rdd1.leftOuterJoin(rdd2)
-    //cogroup
-val newRdd: RDD[(Int, (Iterable[String], Iterable[Int]))] = rdd1.cogroup(rdd2)
+    //cogroup 
+    val newRdd: RDD[(Int, (Iterable[String], Iterable[Int]))] = rdd1.cogroup(rdd2)
     newRdd.collect().foreach(println)
     //关闭连接
     sc.stop()

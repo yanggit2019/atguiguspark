@@ -37,16 +37,33 @@ object Spark07_WordCount {
 //    }
     //复杂版本
     //将原Rdd中字符串以及字符串出现的次数，进行处理，形成一个新的字符串
-    val rdd1: RDD[String] = rdd.map {
-      case (str, count) => {
-        (str + " ") * count
+//    val rdd1: RDD[String] = rdd.map {
+//      case (str, count) => {
+//        (str + " ") * count
+//      }
+//    }
+//    val flatMapRdd: RDD[String] = rdd1.flatMap(_.split(" "))
+//    val groupByRdd: RDD[(String, Iterable[String])] = flatMapRdd.groupBy(datas => datas)
+//    val resRdd: RDD[(String, Int)] = groupByRdd.map {
+//      case (word, datas) => {
+//        (word, datas.size)
+//      }
+//    }
+    //复杂方式实现二
+    //对Rdd中的元素进行扁平映射
+    val flatMapRdd: RDD[(String, Int)] = rdd.flatMap {
+      case (word, count) => {
+        //对多个单词组成的字符串进行切割
+        val wordArr: Array[String] = word.split(" ")
+        wordArr.map(word => (word, count))
       }
     }
-    val flatMapRdd: RDD[String] = rdd1.flatMap(_.split(" "))
-    val groupByRdd: RDD[(String, Iterable[String])] = flatMapRdd.groupBy(datas => datas)
+    //按照单词对Rdd中的元素进行分组
+    val groupByRdd: RDD[(String, Iterable[(String, Int)])] = flatMapRdd.groupBy(_._1)
+
     val resRdd: RDD[(String, Int)] = groupByRdd.map {
       case (word, datas) => {
-        (word, datas.size)
+        (word, datas.map(_._2).sum)
       }
     }
     resRdd.foreach(println)

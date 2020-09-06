@@ -15,7 +15,7 @@ object Spark10_Transformation_distinct {
 //    
 //    newRdd.collect().foreach(println)
     val rdd: RDD[Int] = sc.makeRDD(List(1,2,3,4,5,5,4,3,2,3,6),5)
-    val newRdd: RDD[Int] = rdd.distinct()
+    val newRdd: RDD[Int] = rdd.distinct(2)
     
     newRdd.collect().foreach(println)
     

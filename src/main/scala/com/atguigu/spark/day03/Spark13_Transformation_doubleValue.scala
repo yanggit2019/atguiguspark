@@ -13,7 +13,11 @@ object Spark13_Transformation_doubleValue {
     val rdd1: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4))
     val rdd2: RDD[Int] = sc.makeRDD(List(4,5,6,7))
     //合集
-    val newRdd: RDD[Int] = rdd1.union(rdd2)
+//    val newRdd: RDD[Int] = rdd1.union(rdd2)
+    //交集
+//val newRdd: RDD[Int] = rdd1.intersection(rdd2)
+    //差集
+val newRdd: RDD[Int] = rdd1.subtract(rdd2)
     newRdd.collect().foreach(println)
     
   

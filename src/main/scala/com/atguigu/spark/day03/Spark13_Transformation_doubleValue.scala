@@ -17,7 +17,8 @@ object Spark13_Transformation_doubleValue {
     //交集
 //val newRdd: RDD[Int] = rdd1.intersection(rdd2)
     //差集
-val newRdd: RDD[Int] = rdd1.subtract(rdd2)
+//val newRdd: RDD[Int] = rdd1.subtract(rdd2)
+val newRdd: RDD[(Int, Int)] = rdd1.zip(rdd2)
     newRdd.collect().foreach(println)
     
   

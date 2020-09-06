@@ -23,7 +23,8 @@ object Spark11_Transformation_coalesce {
     }.collect()
     println("---------------------")
     //减少分区
-    val newRdd: RDD[Int] = rdd.coalesce(2)
+    //注意：默认情况下，使用coalese扩大分区是不起作用，因为底层没有执行shuffle
+    val newRdd: RDD[Int] = rdd.coalesce(4)
      newRdd.mapPartitionsWithIndex{
       (index,datas) =>{
         println(index +"------>"+datas.mkString(","))

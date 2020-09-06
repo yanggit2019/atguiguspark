@@ -1,7 +1,7 @@
 package com.atguigu.spark.day03
 
 import org.apache.spark.rdd.RDD
-import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.{SparkConf, SparkContext, rdd}
 //使用groupBY完成WordCount
 object Spark07_WordCount {
   def main(args: Array[String]): Unit = {
@@ -10,7 +10,8 @@ object Spark07_WordCount {
     //1.创建SparkContext对象
     val sc = new SparkContext(conf)
     //3.创建rdd
-    val rdd: RDD[String] = sc.makeRDD(List("Hello Scala", "Hello Spark", "Hello World"))
+    val rdd: RDD[(String, Int)] = sc.makeRDD(List(("Hello Scala", 2), ("Hello Spark", 3), ("Hello World", 2)))
+    
     //简单版本，方式一
     //对rdd元素扁平映射
 //    val flatMap: RDD[String] = rdd.flatMap(_.split(" "))
@@ -25,16 +26,29 @@ object Spark07_WordCount {
 //      }
 //    }
       //第二种实现
-    val flatMap: RDD[String] = rdd.flatMap(_.split(" "))
-    //将rdd中的单词进行分组
-    val groupByRdd: RDD[(String, Iterable[String])] = flatMap.groupBy(word => word)
-    //对分组后的rdd进行映射
+//    val flatMap: RDD[String] = rdd.flatMap(_.split(" "))
+//    //将rdd中的单词进行分组
+//    val groupByRdd: RDD[(String, Iterable[String])] = flatMap.groupBy(word => word)
+//    //对分组后的rdd进行映射
+//    val resRdd: RDD[(String, Int)] = groupByRdd.map {
+//      case (word, datas) => {
+//        (word, datas.size)
+//      }
+//    }
+    //复杂版本
+    //将原Rdd中字符串以及字符串出现的次数，进行处理，形成一个新的字符串
+    val rdd1: RDD[String] = rdd.map {
+      case (str, count) => {
+        (str + " ") * count
+      }
+    }
+    val flatMapRdd: RDD[String] = rdd1.flatMap(_.split(" "))
+    val groupByRdd: RDD[(String, Iterable[String])] = flatMapRdd.groupBy(datas => datas)
     val resRdd: RDD[(String, Int)] = groupByRdd.map {
       case (word, datas) => {
         (word, datas.size)
       }
     }
-    
     resRdd.foreach(println)
     
     //关闭连接

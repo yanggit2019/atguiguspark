@@ -23,7 +23,7 @@ val stuList = List((new Student("jingjing", 18), 1),
   (new Student("jingjing", 20), 1)
 )
     val rdd: RDD[(Student, Int)] = sc.makeRDD(stuList)
-    rdd.sortByKey(false).collect().foreach(println)
+    rdd.sortByKey().collect().foreach(println)
     
     
     //关闭连接
@@ -34,7 +34,10 @@ class Student(var name:String,var age:Int) extends Ordered[Student] with Seriali
   //指定比较规则
   override def compare(that: Student): Int = {
     //先按照名称排序,如果名称相同的话,再按年龄排序
-    val res: Int = this.name.compareTo(that.name)
+    var res: Int = this.name.compareTo(that.name)
+    if (res==0){
+      res = that.age - this.age
+    }
     res
   }
 

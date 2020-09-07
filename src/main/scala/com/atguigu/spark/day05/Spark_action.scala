@@ -19,7 +19,10 @@ object Spark_action {
     //foreach
 //    rdd.foreach(println)
     //count 获取rdd中元素的个数
-val res: Long = rdd.count()
+//val res: Long = rdd.count()
+//    println(res)
+    // first 返回rdd中第一个元素
+val res: Int = rdd.first()
     println(res)
     //关闭连接
     sc.stop()

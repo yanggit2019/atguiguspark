@@ -37,9 +37,14 @@ object Spark_action {
     ///fold是aggregate的简化，分区内和分区间计算规则相同
 //    val res: Int = rdd.fold(10)(_ + _)
 //    println(res)
-    val rdd: RDD[(Int, String)] = sc.makeRDD(List((1, "a"), (1, "a"), (1, "a"), (1, "a"), (1, "a"), (2, "b"), (3, "c")))
-    val res: collection.Map[Int, Long] = rdd.countByKey()
-    println(res)
+//    val rdd: RDD[(Int, String)] = sc.makeRDD(List((1, "a"), (1, "a"), (1, "a"), (1, "a"), (1, "a"), (2, "b"), (3, "c")))
+//    val res: collection.Map[Int, Long] = rdd.countByKey()
+    val rdd: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4), 2)
+    //保存为文本文件
+    rdd.saveAsTextFile("H:\\spark-0105\\output")
+    //保存为序列化文件
+    rdd.saveAsObjectFile("H:\\spark-0105\\output1")
+    rdd.map((_,1)).saveAsSequenceFile("H:\\spark-0105\\output2")
     //关闭连接
     sc.stop()
   }

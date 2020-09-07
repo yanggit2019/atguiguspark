@@ -13,18 +13,23 @@ object Spark04_TestLineage {
     val rdd: RDD[String] = sc.makeRDD(List("hello spark", "hello scala", "hello jingjing"), 2)
     //4.查看Rdd血缘关系
     println(rdd.toDebugString)
+    //查看Rdd的依赖关系
+    println(rdd.dependencies)
     println("-------------------")
 
     val flatMapRdd: RDD[String] = rdd.flatMap(_.split(" "))
     println(flatMapRdd.toDebugString)
+    println(flatMapRdd.dependencies)
     println("------------------")
 
     val mapRdd: RDD[(String, Int)] = flatMapRdd.map((_, 1))
     println(mapRdd.toDebugString)
+    println(mapRdd.dependencies)
     println("----------------------")
 
     val redRdd: RDD[(String, Int)] = mapRdd.reduceByKey(_ + _)
     println(redRdd.toDebugString)
+    println(redRdd.dependencies)
     println("----------------------")
     
     //关闭连接

@@ -1,7 +1,8 @@
 package com.atguigu.spark.day05
 
+import org.apache.spark
 import org.apache.spark.rdd.RDD
-import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.{SparkConf, SparkContext, rdd}
 
 object Spark_action {
   def main(args: Array[String]): Unit = {
@@ -32,7 +33,9 @@ object Spark_action {
 //    println(res.mkString(","))
     //aggregate
     val rdd: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4), 8)
-    val res: Int = rdd.aggregate(0)(_ + _, _ + _)
+//    val res: Int = rdd.aggregate(0)(_ + _, _ + _)
+    ///fold是aggregate的简化，分区内和分区间计算规则相同
+    val res: Int = rdd.fold(10)(_ + _)
     println(res)
     //关闭连接
     sc.stop()

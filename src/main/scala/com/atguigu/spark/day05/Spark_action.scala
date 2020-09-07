@@ -32,10 +32,13 @@ object Spark_action {
 //val res: Array[Int] = rdd.takeOrdered(3)
 //    println(res.mkString(","))
     //aggregate
-    val rdd: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4), 8)
+//    val rdd: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4), 8)
 //    val res: Int = rdd.aggregate(0)(_ + _, _ + _)
     ///fold是aggregate的简化，分区内和分区间计算规则相同
-    val res: Int = rdd.fold(10)(_ + _)
+//    val res: Int = rdd.fold(10)(_ + _)
+//    println(res)
+    val rdd: RDD[(Int, String)] = sc.makeRDD(List((1, "a"), (1, "a"), (1, "a"), (1, "a"), (1, "a"), (2, "b"), (3, "c")))
+    val res: collection.Map[Int, Long] = rdd.countByKey()
     println(res)
     //关闭连接
     sc.stop()

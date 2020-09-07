@@ -17,7 +17,10 @@ object Spark_action {
 //    val ints: Array[Int] = rdd.collect()
 //    ints.foreach(println)
     //foreach
-    rdd.foreach(println)
+//    rdd.foreach(println)
+    //count 获取rdd中元素的个数
+val res: Long = rdd.count()
+    println(res)
     //关闭连接
     sc.stop()
   }

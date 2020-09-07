@@ -22,8 +22,11 @@ object Spark_action {
 //val res: Long = rdd.count()
 //    println(res)
     // first 返回rdd中第一个元素
-val res: Int = rdd.first()
-    println(res)
+//val res: Int = rdd.first()
+//    println(res)
+    //take 返回rdd前n个元素组成数组
+val res: Array[Int] = rdd.take(3)
+    res.foreach(println)
     //关闭连接
     sc.stop()
   }

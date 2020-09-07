@@ -10,10 +10,23 @@ object Spark04_TestLineage {
     //1.创建SparkContext对象
     val sc = new SparkContext(conf)
     //3.创建Rdd
-    val rdd: RDD[String] = sc.makeRDD(List("hello", "spark", "hello", "hello jingjing"), 2)
+    val rdd: RDD[String] = sc.makeRDD(List("hello spark", "hello scala", "hello jingjing"), 2)
     //4.查看Rdd血缘关系
     println(rdd.toDebugString)
+    println("-------------------")
 
+    val flatMapRdd: RDD[String] = rdd.flatMap(_.split(" "))
+    println(flatMapRdd.toDebugString)
+    println("------------------")
+
+    val mapRdd: RDD[(String, Int)] = flatMapRdd.map((_, 1))
+    println(mapRdd.toDebugString)
+    println("----------------------")
+
+    val redRdd: RDD[(String, Int)] = mapRdd.reduceByKey(_ + _)
+    println(redRdd.toDebugString)
+    println("----------------------")
+    
     //关闭连接
     sc.stop()
   }

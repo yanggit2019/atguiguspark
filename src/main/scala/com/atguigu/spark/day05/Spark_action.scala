@@ -9,7 +9,7 @@ object Spark_action {
     val conf: SparkConf = new SparkConf().setMaster("local[*]").setAppName("Spark01_CreateRDD_mem")
     //1.创建SparkContext对象
     val sc = new SparkContext(conf)
-    val rdd: RDD[Int] = sc.makeRDD(List(1, 6,5, 3, 4),2)
+//    val rdd: RDD[Int] = sc.makeRDD(List(1, 6,5, 3, 4),2)
     //reduce
 //    val res: Int = rdd.reduce(_ + _)
 //    print(res)
@@ -28,8 +28,12 @@ object Spark_action {
 //val res: Array[Int] = rdd.take(3)
 //    res.foreach(println)
     //takeordered 获取rdd排序后 前n个元素组成的数组
-val res: Array[Int] = rdd.takeOrdered(3)
-    println(res.mkString(","))
+//val res: Array[Int] = rdd.takeOrdered(3)
+//    println(res.mkString(","))
+    //aggregate
+    val rdd: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4), 8)
+    val res: Int = rdd.aggregate(0)(_ + _, _ + _)
+    println(res)
     //关闭连接
     sc.stop()
   }

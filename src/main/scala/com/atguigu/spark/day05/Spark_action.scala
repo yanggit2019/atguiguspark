@@ -13,9 +13,11 @@ object Spark_action {
     //reduce
 //    val res: Int = rdd.reduce(_ + _)
 //    print(res)
-    //collect
-    val ints: Array[Int] = rdd.collect()
-    ints.foreach(println)
+//    //collect
+//    val ints: Array[Int] = rdd.collect()
+//    ints.foreach(println)
+    //foreach
+    rdd.foreach(println)
     //关闭连接
     sc.stop()
   }

@@ -11,8 +11,11 @@ object Spark_action {
     val sc = new SparkContext(conf)
     val rdd: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4))
     //reduce
-    val res: Int = rdd.reduce(_ + _)
-    print(res)
+//    val res: Int = rdd.reduce(_ + _)
+//    print(res)
+    //collect
+    val ints: Array[Int] = rdd.collect()
+    ints.foreach(println)
     //关闭连接
     sc.stop()
   }

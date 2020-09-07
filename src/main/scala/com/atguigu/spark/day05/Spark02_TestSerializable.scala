@@ -21,7 +21,7 @@ object Spark02_TestSerializable {
     sc.stop()
   }
 }
-class User{
+class User extends Serializable {
   var name:String = _
 
   override def toString: String = s"User(${name})"

@@ -1,7 +1,9 @@
 package com.atguigu.spark.day06
 
+import org.apache.spark
 import org.apache.spark.rdd.RDD
-import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.util.LongAccumulator
+import org.apache.spark.{Accumulator, SparkConf, SparkContext, rdd}
 
 /**
  * 累加器
@@ -16,7 +18,10 @@ object Spark06_Accumulator {
 //    val rdd: RDD[Int] = sc.makeRDD(List(1, 2, 3, 4))
 //    println(rdd.sum())
 //    println(rdd.reduce(_ + _))
-    val rdd: RDD[(String, Int)] = sc.makeRDD(List(("a", 1), ("a", 2), ("a", 3), ("a", 4)))
+    /*
+    如果定义一个普通的变量，那么在Driver定义，Excutor会创建变量的副本，算子都是对副本进行操作，Driver端的变量不会更新
+     */
+    /*val rdd: RDD[(String, Int)] = sc.makeRDD(List(("a", 1), ("a", 2), ("a", 3), ("a", 4)))
     var sum:Int =0
     rdd.foreach{
       case (word,count) =>{
@@ -24,6 +29,24 @@ object Spark06_Accumulator {
       }
     }
     println(sum)
+     */
+    
+    /*
+    如果需要通过Excutor,对Driver端定义的变量进行更新，需要定义为累计器
+    累计器和普通的变量相比，会将Excutor端的结果，收集到Driver端进行汇总
+     */
+    val rdd: RDD[(String, Int)] = sc.makeRDD(List(("a", 1), ("a", 2), ("a", 3), ("a", 4)))
+     //创建累计器
+    
+//     val sum: Accumulator[Int] = sc.accumulator(10)//过时用法
+    val sum: LongAccumulator = sc.longAccumulator("sum")
+    rdd.foreach{
+      case (word,count) =>{
+        //sum += count
+        sum.add(count)
+      }
+    }
+    println(sum.value)
     //关闭连接
     sc.stop()
   }

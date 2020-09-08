@@ -34,6 +34,8 @@ object Spark01_checkpoint {
     println("------------------------")
     //打印血缘关系
     println(mapRdd.toDebugString)
+    //释放缓存
+//    mapRdd.unpersist()
     //触发行动操作
     mapRdd.collect().foreach(println)
     //关闭连接

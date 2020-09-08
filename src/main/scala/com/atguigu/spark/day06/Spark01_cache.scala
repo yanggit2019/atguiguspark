@@ -20,7 +20,12 @@ object Spark01_cache {
       }
     }
     //添加缓存,对rdd的数据进行缓存
-    mapRdd.cache()
+//    mapRdd.cache()
+    /*
+    persist可以接收参数，指定缓存位置
+    虽然叫持久化，但是当应用程序执行结束之后，缓存目录也会被删除
+     */
+    mapRdd.persist()
     //打印血缘关系
     println(mapRdd.toDebugString)
     //触发行动操作

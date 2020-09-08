@@ -12,7 +12,7 @@ object Spark01_checkpoint {
     //1.创建SparkContext对象
     val sc = new SparkContext(conf)
     //设置检查点目录
-    sc.setCheckpointDir("H:\\spark-0105\\output")
+    sc.setCheckpointDir("H:\\spark-0105\\cp")
     //3.创建rdd
     val rdd: RDD[String] = sc.makeRDD(List("hello bangzhang", "hello jingjing"), 2)
     //4.映射
@@ -25,6 +25,8 @@ object Spark01_checkpoint {
    
     //打印血缘关系
     println(mapRdd.toDebugString)
+    //在开发环境中，一般检查点和缓存配合使用
+    mapRdd.cache()
     //设置检查点
     mapRdd.checkpoint()
     //触发行动操作

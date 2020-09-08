@@ -19,6 +19,8 @@ object Spark01_cache {
         (word, 1)
       }
     }
+    //添加缓存,对rdd的数据进行缓存
+    mapRdd.cache()
     //打印血缘关系
     println(mapRdd.toDebugString)
     //触发行动操作

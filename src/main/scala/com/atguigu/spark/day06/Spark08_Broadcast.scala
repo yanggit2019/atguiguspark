@@ -16,11 +16,15 @@ object Spark08_Broadcast {
     //想实现类似join的效果 (a,(1,4)),(b,(2,5)),(c,(3,6))
     val rdd: RDD[(String, Int)] = sc.makeRDD(List(("a", 1), ("b", 2), ("c", 3)))
     val list: List[(String, Int)] = List(("a", 4), ("b", 5), ("c", 6))
-    
-    val resRDD: RDD[(String, (Int, Int))] = rdd.map {
+    //创建一个广播变量
+    val broadcastList: Broadcast[List[(String, Int)]] = sc.broadcast(list)
+
+
+    val resRdd: RDD[(String, (Int, Any))] = rdd.map {
       case (k1, v1) => {
         var v3 = 0
-        for ((k2, v2) <- list) {
+        //        for ((k2, v2) <- list) {
+        for ((k2, v2) <- broadcastList.value) {
           if (k1 == k2) {
             v3 = v2
           }
@@ -28,7 +32,8 @@ object Spark08_Broadcast {
         (k1, (v1, v3))
       }
     }
-    resRDD.collect().foreach(println)
+
+    resRdd.collect().foreach(println)
     //关闭连接
     sc.stop()
   }

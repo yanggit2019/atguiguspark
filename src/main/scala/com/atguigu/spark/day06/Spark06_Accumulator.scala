@@ -7,6 +7,7 @@ import org.apache.spark.{Accumulator, SparkConf, SparkContext, rdd}
 
 /**
  * 累加器
+ * 分布式共享只读变量，task之间不能读取
  */
 object Spark06_Accumulator {
   def main(args: Array[String]): Unit = {

@@ -13,7 +13,9 @@ object SparkSQL01_Demo {
     //读取json文件创建DataFrame
     val df: DataFrame = spark.read.json("H:\\spark-0105\\input\\test.json")
     //查看df里面的数据
-    df.show()
-    
+//    df.show()
+    //SQL语法风格
+    df.createOrReplaceTempView("user")
+    spark.sql("select * from user").show()
   }
 }

@@ -2,7 +2,7 @@ package com.atguigu.spark.sql.day01
 
 import org.apache.spark.SparkConf
 import org.apache.spark.rdd.RDD
-import org.apache.spark.sql.{DataFrame, SparkSession}
+import org.apache.spark.sql.{DataFrame, Dataset, SparkSession}
 
 //演示RDD&DF&DS之间关系以及转换
 object SparkSQL01_Demo {
@@ -28,6 +28,11 @@ object SparkSQL01_Demo {
     val rdd: RDD[(Int, String, Int)] = spark.sparkContext.makeRDD(List((1, "banzhang", 20), (2, "jingjing", 18), (3, "wangqiang", 30)))
     //RDD----->DataFrame
     val df: DataFrame = rdd.toDF("id","name","age")
-    df.show()
+//    df.show()
+    //DataFram----->DataSet
+    val ds: Dataset[User] = df.as[User]
+    ds.show()
+    
   }
 }
+case class User(id:Int,name:String,age:Int)

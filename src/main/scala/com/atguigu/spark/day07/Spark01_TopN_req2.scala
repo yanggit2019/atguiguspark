@@ -150,6 +150,7 @@ val ids: Array[String] = res.map(_.categoryId)
       }.take(10)
     }
     resRdd.foreach(println)
+    
     //关闭连接
     sc.stop()
   }

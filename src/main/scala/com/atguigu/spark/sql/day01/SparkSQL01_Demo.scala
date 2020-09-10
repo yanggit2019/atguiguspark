@@ -15,7 +15,9 @@ object SparkSQL01_Demo {
     //查看df里面的数据
 //    df.show()
     //SQL语法风格
-    df.createOrReplaceTempView("user")
-    spark.sql("select * from user").show()
+//    df.createOrReplaceTempView("user")
+//    spark.sql("select * from user").show()
+    //DSL风格
+    df.select("name","age").show()
   }
 }

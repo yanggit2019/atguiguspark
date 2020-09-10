@@ -35,8 +35,9 @@ object SparkSQL01_Demo {
     val df1: DataFrame = ds.toDF()
     
     val rdd1: RDD[Row] = df1.rdd
-    
-    ds.show()
+ 
+//   val ds: Dataset[User] = rdd.toDF("id","name","age").as[User]
+//    ds.show()
     //释放资源
     spark.stop()
   }
